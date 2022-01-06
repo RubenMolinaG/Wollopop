@@ -13,7 +13,7 @@ python lanzador.py URL TIME
 python lanzador.py "https://es.wallapop.com/app/search?longitude=-3.6827461&latitude=40.4893538" 10
 ```
 
-El ejemplo anterior hará un scrap de la web durante 10 minutos. Mientras hace el scroll de la web, añade los productos a una lista, la cual luego se volcará dentro de un fichero JSON.
+El ejemplo anterior hará un <ins>scrap de la web durante 10 minutos.</ins> Mientras hace el scroll de la web, añade los productos a una lista, la cual luego <ins>se volcará dentro de un fichero JSON.</ins>
 
 **Ejemplo de fichero JSON**
 ```json
