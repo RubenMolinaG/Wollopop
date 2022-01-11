@@ -1,6 +1,5 @@
 # coding=utf-8
 
-import argparse
 from scrapper   import Scrapper
 from scrolldown import ScrollDown
 from concurrent.futures import ThreadPoolExecutor
@@ -22,12 +21,12 @@ def main():
         help()
         sys.exit(-1)
 
-    URL = sys.argv[1]
-    TIEMPO = int(sys.argv[2])
+    URL: str    = sys.argv[1]
+    TIEMPO: int = int(sys.argv[2])
 
-    TIEMPO_FINAL = (time.time() + (60 * TIEMPO))
-    srp = Scrapper(URL)
-    scroll = ScrollDown(srp.driver, 800, TIEMPO_FINAL)
+    TIEMPO_FINAL: int = (time.time() + (60 * TIEMPO))
+    srp: Scrapper = Scrapper(URL)
+    scroll: ScrollDown = ScrollDown(srp.driver, 800, TIEMPO_FINAL)
 
     with ThreadPoolExecutor() as executor:
         if (executor.submit(srp.aceptar_politicas_privacidad).done):

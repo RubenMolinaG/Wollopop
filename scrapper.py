@@ -12,13 +12,9 @@ import datetime
 
 class Scrapper():
     
-    def __init__(self, URL):
-        self.URL = URL
-        #self.options = Options()
-        # self.options.add_argument("--headless")
-        # self.options.add_argument("--disable-gpu")
-        # self.options.add_argument("--disable-extensions")
-        self.driver = webdriver.Chrome('./chromedriver')
+    def __init__(self, URL: str) -> None:
+        self.URL: str = URL
+        self.driver: webdriver = webdriver.Chrome('./chromedriver')
         self.driver.maximize_window()
         self.driver.get(self.URL)
         
@@ -35,18 +31,18 @@ class Scrapper():
     # Obtiene una lista con los productos de Wallapop.
     def get_fichero_datos(self, tiempo_final: int) -> list:
         
-        lista_enlaces = []
-        lista_productos = []
+        lista_enlaces: list     = []
+        lista_productos: list   = []
 
         # Evento para añadir los productos a la lista:
         while (time.time() < tiempo_final):
             try:                    
-                productos = self.driver.find_elements(By.CLASS_NAME, 'ItemCardList__item')
+                productos: list = self.driver.find_elements(By.CLASS_NAME, 'ItemCardList__item')
                 for producto in productos:
-                    nombre  = (producto.find_element(By.CLASS_NAME, 'ItemCard__title').text)
-                    precio  = (producto.find_element(By.CLASS_NAME, 'ItemCard__price').text)[:len(producto.find_element(By.CLASS_NAME, 'ItemCard__price').text) - 1]
-                    desc    = (producto.find_element(By.CLASS_NAME, 'ItemCard__description').text)
-                    enlace  = (producto.get_attribute('href'))
+                    nombre: str  = (producto.find_element(By.CLASS_NAME, 'ItemCard__title').text)
+                    precio: str  = (producto.find_element(By.CLASS_NAME, 'ItemCard__price').text)[:len(producto.find_element(By.CLASS_NAME, 'ItemCard__price').text) - 1]
+                    desc:   str  = (producto.find_element(By.CLASS_NAME, 'ItemCard__description').text)
+                    enlace: str  = (producto.get_attribute('href'))
                     
                     if (enlace not in lista_enlaces):
                         if (',' not in precio) and ('.' not in precio):     
@@ -67,7 +63,7 @@ class Scrapper():
     
     # Vuelca el contenido de la lista dentro de un fichero JSON.
     def crear_fichero_json(self, lista_productos: list) -> None:
-        fecha = datetime.date.today().strftime("%Y-%m-%d")
+        fecha: str = datetime.date.today().strftime("%Y-%m-%d")
         with open(f'./json_files/wallapop_{fecha}.json', 'w') as file:
             json.dump(lista_productos, file, ensure_ascii=False, indent=4)
         print(f'\n{bcolors.OKGREEN}{bcolors.UNDERLINE}- Fichero generado con exito.{bcolors.ENDC}\n{bcolors.OKCYAN}PATH: ./json_files/wallapop_{fecha}.json{bcolors.ENDC}')

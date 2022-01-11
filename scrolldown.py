@@ -1,16 +1,17 @@
 # coding=utf-8
 
 import time
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 class ScrollDown():
 
-    def __init__(self, driver, px_desplazamiento, tiempo_final):
-        self.driver = driver
-        self.px_desplazamiento = px_desplazamiento
-        self.tiempo_minutos = tiempo_final
+    def __init__(self, driver: webdriver, px_desplazamiento: int, tiempo_final: int) -> None:
+        self.driver: driver         = driver
+        self.px_desplazamiento: int = px_desplazamiento
+        self.tiempo_minutos: int    = tiempo_final
 
-    def desplazar_web(self):
+    def desplazar_web(self) -> None:
         while (time.time() < self.tiempo_minutos):
             # Evento para pulsar el botón 'Mostrar más productos'
             try:
